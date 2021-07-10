@@ -27,12 +27,6 @@ namespace Townie
         public static void Plant(ref HoeDirt __instance, ref bool __result, int index, int tileX, int tileY, Farmer who, bool isFertilizer, GameLocation location)
         {
 
-            Monitor.Log("Plant hit", LogLevel.Debug);
-            Monitor.Log($"{who.Name}-{who.uniqueMultiplayerID}", LogLevel.Debug);
-            Monitor.Log($"{__instance.crop.netSeedIndex.Value}", LogLevel.Debug);
-            Monitor.Log($"{location.name.Value}", LogLevel.Debug);
-
-
 
             if (__result && __instance.crop != null && location.name.Value.Equals("Farm"))
             {
