@@ -64,12 +64,13 @@ namespace Townie
                     if (crop != null)
                     {
 
-                        int numSeasons = crop.seasonsToGrowIn.Count;
+                        int numSeasons = crop.seasonsToGrowIn.Count - (crop.seasonsToGrowIn.IndexOf(townieCrop.datePlanted.Season));
+                        
                         int numDaysToLive = townieCrop.extraDays + (28 * numSeasons) - townieCrop.datePlanted.Day;
                         SDate dateOfDeath = townieCrop.datePlanted.AddDays(numDaysToLive);
                         var fullyGrown = this.Helper.Reflection.GetField<NetBool>(crop, "fullyGrown").GetValue().Value;
 
-                        if (SDate.Now() > dateOfDeath && !fullyGrown)
+                        if (SDate.Now() > dateOfDeath && !(fullyGrown && onlineIds.Contains(townieCrop.ownerId)))
                         {
                             loader.ClientRemoveCrop(townieCrop.cropLocationName, townieCrop.cropLocationTile);
                             var dead = this.Helper.Reflection.GetField<NetBool>(crop, "dead").GetValue();
