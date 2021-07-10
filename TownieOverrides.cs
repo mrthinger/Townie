@@ -34,11 +34,10 @@ namespace Townie
 
 
 
-            if (__result && __instance.crop != null)
+            if (__result && __instance.crop != null && location.name.Value.Equals("Farm"))
             {
                 var crop = new TownieCrop(location.name.Value, new Vector2(tileX, tileY), who.uniqueMultiplayerID.Value, SDate.Now());
                 Loader.ClientAddCrop(crop);
-                __instance.crop.growCompletely();
             }
 
         }

@@ -25,7 +25,6 @@ namespace Townie
             helper.Events.GameLoop.SaveLoaded += OnSaveLoaded;
             helper.Events.GameLoop.GameLaunched += OnGameLaunched;
             helper.Events.GameLoop.Saving += OnSaving;
-            helper.Events.Input.ButtonPressed += OnButtonPressed;
 
             helper.Events.GameLoop.DayEnding += OnDayEnd;
         }
@@ -124,60 +123,6 @@ namespace Townie
                 loader.LoadDataFromDisk();
             }
         }
-
-        private void OnButtonPressed(object sender, ButtonPressedEventArgs e)
-        {
-            // ignore if player hasn't loaded a save yet
-            if (!Context.IsWorldReady)
-                return;
-
-            // print button presses to the console window
-            Monitor.Log($"{Game1.player.Name} pressed {e.Button}.", LogLevel.Debug);
-            if (e.Button.Equals(SButton.Space))
-                this.GrowCropOnPlayer();
-
-            if (e.Button.Equals(SButton.MouseRight))
-            {
-                var tile = Game1.currentCursorTile;
-                GameLocation location = Game1.currentLocation;
-                if (location == null)
-                    return;
-                if (location.terrainFeatures.TryGetValue(tile, out TerrainFeature terrainFeature))
-                {
-                    if (terrainFeature is HoeDirt dirt && dirt.crop is Crop crop && crop != null)
-                    {
-                        var cropLocation = this.Helper.Reflection.GetField<Vector2>(crop, "tilePosition").GetValue();
-
-                        var loadedCrop = loader.GetTownieCrop(location.name.Value, cropLocation);
-                        if (loadedCrop != null)
-                        {
-                            Monitor.Log($"{loadedCrop.ownerId}", LogLevel.Debug);
-                        }
-                    }
-                }
-            }
-        }
-
-        private void GrowCropOnPlayer()
-        {
-            Vector2 playerTile = Game1.player.getTileLocation();
-            GameLocation location = Game1.currentLocation;
-            if (location == null)
-                return;
-
-            // terrain feature
-            if (location.terrainFeatures.TryGetValue(playerTile, out TerrainFeature terrainFeature))
-            {
-                if (terrainFeature is HoeDirt dirt)
-                {
-
-                    Crop crop = dirt.crop;
-                    crop.growCompletely();
-                }
-            }
-        }
-
-
 
     }
 

@@ -52,7 +52,7 @@ namespace Townie
             var location = Game1.getLocationFromName(cropLocationName);
             if (location.terrainFeatures.TryGetValue(cropLocationTile, out TerrainFeature terrainFeature))
             {
-                if (terrainFeature is HoeDirt dirt && dirt.crop is Crop crop && crop != null)
+                if (terrainFeature is HoeDirt dirt && dirt != null && dirt.crop is Crop crop && crop != null)
                 {
                     return crop;
                 }
@@ -73,7 +73,6 @@ namespace Townie
             return null;
         }
 
-        // override object.Equals
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
@@ -81,7 +80,6 @@ namespace Townie
                 return false;
             }
 
-            // TODO: write your implementation of Equals() here
 
             if (obj is TownieCrop otherCrop) {
 
