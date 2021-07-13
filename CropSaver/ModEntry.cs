@@ -9,7 +9,7 @@ using StardewModdingAPI.Utilities;
 using StardewValley;
 using StardewValley.TerrainFeatures;
 
-namespace Townie
+namespace CropSaver
 {
     public class ModEntry : Mod
     {
@@ -20,7 +20,7 @@ namespace Townie
         public override void Entry(IModHelper helper)
         {
             loader = new ModDataLoader(helper);
-            TownieOverrides.Initialize(helper, Monitor, loader);
+            CropSaverOverrides.Initialize(helper, loader);
 
             helper.Events.GameLoop.SaveLoaded += OnSaveLoaded;
             helper.Events.GameLoop.GameLaunched += OnGameLaunched;
@@ -41,7 +41,7 @@ namespace Townie
                     onlineIds.Add(farmer.uniqueMultiplayerID);
                 }
 
-                loader.GetTownieCrops().ForEach(townieCrop =>
+                loader.GetSaverCrops().ForEach(townieCrop =>
                 {
 
                     var dirt = townieCrop.TryGetCoorespondingDirt();
@@ -49,16 +49,16 @@ namespace Townie
                     {
                         if (!onlineIds.Contains(townieCrop.ownerId) && dirt.needsWatering())
                         {
-                            loader.ClientIncrementTownieCropDays(townieCrop);
+                            loader.ClientIncrementSaverCropDays(townieCrop);
                         }
                     }
                 });
 
                 //remove crops
-                for (int i = loader.GetTownieCrops().Count - 1; i >= 0; i--)
+                for (int i = loader.GetSaverCrops().Count - 1; i >= 0; i--)
                 {
 
-                    var townieCrop = loader.GetTownieCrops()[i];
+                    var townieCrop = loader.GetSaverCrops()[i];
                     var crop = townieCrop.TryGetCoorespondingCrop();
                     if (crop != null)
                     {
@@ -67,7 +67,12 @@ namespace Townie
                         
                         int numDaysToLive = townieCrop.extraDays + (28 * numSeasons) - townieCrop.datePlanted.Day;
                         SDate dateOfDeath = townieCrop.datePlanted.AddDays(numDaysToLive);
-                        var fullyGrown = this.Helper.Reflection.GetField<NetBool>(crop, "fullyGrown").GetValue().Value;
+
+                        var currentPhase = this.Helper.Reflection.GetField<NetInt>(crop, "currentPhase").GetValue().Value;
+                        var phaseDays = this.Helper.Reflection.GetField<NetIntList>(crop, "phaseDays").GetValue();
+
+
+                        var fullyGrown = (currentPhase >= phaseDays.Count - 1);
 
                         if (SDate.Now() > dateOfDeath && !(fullyGrown && onlineIds.Contains(townieCrop.ownerId)))
                         {
@@ -101,17 +106,17 @@ namespace Townie
 
             harmony.Patch(
                 original: AccessTools.Method(typeof(HoeDirt), nameof(HoeDirt.plant)),
-                postfix: new HarmonyMethod(typeof(TownieOverrides), nameof(TownieOverrides.Plant))
+                postfix: new HarmonyMethod(typeof(CropSaverOverrides), nameof(CropSaverOverrides.Plant))
             );
             
             harmony.Patch(
                 original: AccessTools.Method(typeof(HoeDirt), nameof(HoeDirt.destroyCrop)),
-                prefix: new HarmonyMethod(typeof(TownieOverrides), nameof(TownieOverrides.DestroyCrop_Prefix))
+                prefix: new HarmonyMethod(typeof(CropSaverOverrides), nameof(CropSaverOverrides.DestroyCrop_Prefix))
             );
 
             harmony.Patch(
                 original: AccessTools.Method(typeof(Crop), nameof(Crop.Kill)),
-                prefix: new HarmonyMethod(typeof(TownieOverrides), nameof(TownieOverrides.KillCrop_Prefix))
+                prefix: new HarmonyMethod(typeof(CropSaverOverrides), nameof(CropSaverOverrides.KillCrop_Prefix))
             );
 
         }

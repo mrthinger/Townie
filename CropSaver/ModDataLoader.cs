@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Townie
+namespace CropSaver
 {
     class ModDataLoader
     {
@@ -38,25 +38,25 @@ namespace Townie
         {
             if (e.Type == CROP_ADDED_EVENT)
             {
-                TownieCrop crop = e.ReadAs<TownieCrop>();
+                SaverCrop crop = e.ReadAs<SaverCrop>();
                 OnCropAdded(crop);
             }
 
             if (e.Type == CROP_REMOVED_EVENT)
             {
-                TownieCrop crop = e.ReadAs<TownieCrop>();
+                SaverCrop crop = e.ReadAs<SaverCrop>();
                 OnCropRemoved(crop);
             }
 
             if (e.Type == CROP_EXTRA_DAY_INCREMENT_EVENT)
             {
-                TownieCrop crop = e.ReadAs<TownieCrop>();
-                onIncrementTownieCropDays(crop);
+                SaverCrop crop = e.ReadAs<SaverCrop>();
+                onIncrementSaverCropDays(crop);
             }
         }
 
 
-        private void onIncrementTownieCropDays(TownieCrop cropToUpdate)
+        private void onIncrementSaverCropDays(SaverCrop cropToUpdate)
         {
             var crop = data.crops.Find(c => c.Equals(cropToUpdate));
 
@@ -65,30 +65,30 @@ namespace Townie
                 crop.IncrementExtraDays();
             }
         }
-        public void ClientIncrementTownieCropDays(TownieCrop crop)
+        public void ClientIncrementSaverCropDays(SaverCrop crop)
         {
-            onIncrementTownieCropDays(crop);
+            onIncrementSaverCropDays(crop);
             this.helper.Multiplayer.SendMessage(crop, CROP_EXTRA_DAY_INCREMENT_EVENT);
         }
 
-        private void OnCropAdded(TownieCrop crop)
+        private void OnCropAdded(SaverCrop crop)
         {
             data.crops.Add(crop);
         }
-        public void ClientAddCrop(TownieCrop crop)
+        public void ClientAddCrop(SaverCrop crop)
         {
             OnCropAdded(crop);
             this.helper.Multiplayer.SendMessage(crop, CROP_ADDED_EVENT);
         }
 
-        private void OnCropRemoved(TownieCrop crop)
+        private void OnCropRemoved(SaverCrop crop)
         {
             data.crops.Remove(crop);
         }
         public void ClientRemoveCrop(string locationName, Vector2 tileLocation)
         {
 
-            var crop = GetTownieCrop(locationName, tileLocation);
+            var crop = GetSaverCrop(locationName, tileLocation);
             if (crop != null)
             {
                 OnCropRemoved(crop);
@@ -96,7 +96,7 @@ namespace Townie
             }
         }
 
-        public TownieCrop GetTownieCrop(string locationName, Vector2 tileLocation)
+        public SaverCrop GetSaverCrop(string locationName, Vector2 tileLocation)
         {
             int i = data.crops.FindIndex((crop) => crop.equalsCrop(locationName, tileLocation));
             if (i != -1)
@@ -107,7 +107,7 @@ namespace Townie
             return null;
         }
 
-        public List<TownieCrop> GetTownieCrops()
+        public List<SaverCrop> GetSaverCrops()
         {
             return data.crops;
         }

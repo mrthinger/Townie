@@ -8,19 +8,17 @@ using StardewModdingAPI;
 using StardewModdingAPI.Utilities;
 using Microsoft.Xna.Framework;
 
-namespace Townie
+namespace CropSaver
 {
-    internal class TownieOverrides
+    internal class CropSaverOverrides
     {
 
         private static IModHelper Helper;
-        private static IMonitor Monitor;
         private static ModDataLoader Loader;
 
-        public static void Initialize(IModHelper helper, IMonitor monitor, ModDataLoader loader)
+        public static void Initialize(IModHelper helper, ModDataLoader loader)
         {
             Helper = helper;
-            Monitor = monitor;
             Loader = loader;
         }
 
@@ -30,7 +28,7 @@ namespace Townie
 
             if (__result && __instance.crop != null && location.name.Value.Equals("Farm"))
             {
-                var crop = new TownieCrop(location.name.Value, new Vector2(tileX, tileY), who.uniqueMultiplayerID.Value, SDate.Now());
+                var crop = new SaverCrop(location.name.Value, new Vector2(tileX, tileY), who.uniqueMultiplayerID.Value, SDate.Now());
                 Loader.ClientAddCrop(crop);
             }
 
@@ -52,7 +50,7 @@ namespace Townie
 
             var cropLocation = Helper.Reflection.GetField<Vector2>(__instance, "tilePosition").GetValue();
 
-            var townieCrop = Loader.GetTownieCrop("Farm", cropLocation);
+            var townieCrop = Loader.GetSaverCrop("Farm", cropLocation);
 
             if (townieCrop != null) return false;
 

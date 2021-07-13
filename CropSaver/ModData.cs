@@ -12,15 +12,15 @@ using StardewModdingAPI.Utilities;
 using StardewValley;
 using StardewValley.TerrainFeatures;
 
-namespace Townie
+namespace CropSaver
 {
     public class ModData
     {
-        public List<TownieCrop> crops { get; set; } = new List<TownieCrop>();
+        public List<SaverCrop> crops { get; set; } = new List<SaverCrop>();
 
     }
 
-    public class TownieCrop
+    public class SaverCrop
     {
         public string cropLocationName;
         public Vector2 cropLocationTile;
@@ -30,7 +30,7 @@ namespace Townie
         public int extraDays;
 
 
-        public TownieCrop(string cropLocationName, Vector2 cropLocationTile, long ownerId, SDate datePlanted, int extraDays = 0)
+        public SaverCrop(string cropLocationName, Vector2 cropLocationTile, long ownerId, SDate datePlanted, int extraDays = 0)
         {
             this.cropLocationName = cropLocationName;
             this.cropLocationTile = cropLocationTile;
@@ -81,7 +81,7 @@ namespace Townie
             }
 
 
-            if (obj is TownieCrop otherCrop) {
+            if (obj is SaverCrop otherCrop) {
 
                 return this.cropLocationName.Equals(otherCrop.cropLocationName)
                     && this.cropLocationTile.Equals(otherCrop.cropLocationTile)
