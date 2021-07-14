@@ -1,0 +1,16 @@
+{
+  "Name": "OfflineProgress",
+  "Author": "MrThinger",
+  "Version": "0.1.0",
+  "Description": "Catchup mechanics for offline players",
+  "UniqueID": "MrThinger.OfflineProgress",
+  "EntryDll": "OfflineProgress.dll",
+  "MinimumApiVersion": "3.0.0",
+  "UpdateKeys": [],
+  "Dependencies": [
+    {
+      "UniqueID": "spacechase0.JsonAssets",
+      "IsRequired": true
+    }
+  ]
+}

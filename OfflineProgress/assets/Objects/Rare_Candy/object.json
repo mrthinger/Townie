@@ -1,0 +1,7 @@
+{
+  "Name": "Rare Candy",
+  "Description": "Grow crop by 1 day.",
+  "Category": "Fertilizer",
+  "Edibility": -300,
+  "CanSell": false
+}

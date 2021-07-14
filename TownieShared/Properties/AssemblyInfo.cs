@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CropSaver")]
+[assembly: AssemblyTitle("TownieShared")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CropSaver")]
+[assembly: AssemblyProduct("TownieShared")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("47b4a1aa-99ee-4e07-bb96-7f7a8c9cb930")]
+[assembly: Guid("d909fc2c-1782-4281-b274-bdda2176ccea")]
 
 // Version information for an assembly consists of the following four values:
 //
