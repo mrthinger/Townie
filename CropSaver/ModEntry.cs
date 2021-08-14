@@ -13,7 +13,7 @@ namespace CropSaver
 {
     public class ModEntry : Mod
     {
-        public static readonly string MOD_KEY = "MrThinger.Townie";
+        public static readonly string MOD_KEY = "MrThinger.CropSaver";
 
         private ModDataLoader loader;
 
@@ -38,7 +38,7 @@ namespace CropSaver
 
                 foreach (Farmer farmer in Game1.getOnlineFarmers())
                 {
-                    onlineIds.Add(farmer.uniqueMultiplayerID);
+                    onlineIds.Add(farmer.UniqueMultiplayerID);
                 }
 
                 loader.GetSaverCrops().ForEach(townieCrop =>

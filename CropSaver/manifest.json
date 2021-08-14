@@ -1,10 +1,10 @@
 {
-  "Name": "Townie",
+  "Name": "CropSaver",
   "Author": "MrThinger",
-  "Version": "0.1.0",
-  "Description": "Support async play with large groups.",
-  "UniqueID": "MrThinger.Townie",
-  "EntryDll": "Townie.dll",
+  "Version": "0.2.0",
+  "Description": "Save crop progress when offline.",
+  "UniqueID": "MrThinger.CropSaver",
+  "EntryDll": "CropSaver.dll",
   "MinimumApiVersion": "3.0.0",
   "UpdateKeys": []
 }

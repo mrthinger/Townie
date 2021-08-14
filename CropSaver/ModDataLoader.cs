@@ -15,7 +15,7 @@ namespace CropSaver
         private static readonly string CROP_REMOVED_EVENT = "CROP_REMOVED_EVENT";
         private static readonly string CROP_EXTRA_DAY_INCREMENT_EVENT = "CROP_EXTRA_DAY_INCREMENT_EVENT";
 
-        public static readonly string MOD_DATA_KEY = "MrThinger.Townie.data";
+        public static readonly string MOD_DATA_KEY = "MrThinger.CropSaver.data";
         private ModData data = new ModData();
 
         private IModHelper helper;
@@ -51,12 +51,12 @@ namespace CropSaver
             if (e.Type == CROP_EXTRA_DAY_INCREMENT_EVENT)
             {
                 SaverCrop crop = e.ReadAs<SaverCrop>();
-                onIncrementSaverCropDays(crop);
+                OnIncrementSaverCropDays(crop);
             }
         }
 
 
-        private void onIncrementSaverCropDays(SaverCrop cropToUpdate)
+        private void OnIncrementSaverCropDays(SaverCrop cropToUpdate)
         {
             var crop = data.crops.Find(c => c.Equals(cropToUpdate));
 
@@ -67,7 +67,7 @@ namespace CropSaver
         }
         public void ClientIncrementSaverCropDays(SaverCrop crop)
         {
-            onIncrementSaverCropDays(crop);
+            OnIncrementSaverCropDays(crop);
             this.helper.Multiplayer.SendMessage(crop, CROP_EXTRA_DAY_INCREMENT_EVENT);
         }
 

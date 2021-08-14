@@ -26,9 +26,9 @@ namespace CropSaver
         {
 
 
-            if (__result && __instance.crop != null && location.name.Value.Equals("Farm"))
+            if (__result && __instance.crop != null && location.Name.Equals("Farm"))
             {
-                var crop = new SaverCrop(location.name.Value, new Vector2(tileX, tileY), who.uniqueMultiplayerID.Value, SDate.Now());
+                SaverCrop crop = new SaverCrop(location.Name, new Vector2(tileX, tileY), who.UniqueMultiplayerID, SDate.Now());
                 Loader.ClientAddCrop(crop);
             }
 
@@ -39,7 +39,7 @@ namespace CropSaver
 
             if (__instance.crop != null)
             {
-                Loader.ClientRemoveCrop(location.name.Value, tileLocation);
+                Loader.ClientRemoveCrop(location.Name, tileLocation);
             }
             return true;
 
